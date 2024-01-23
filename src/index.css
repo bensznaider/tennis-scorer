@@ -39,3 +39,18 @@ body {
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
+
+.continue-button {
+  background-color: #800040;
+  color: white;
+  padding: 1rem;
+  border: 2px solid black;
+  border-radius: 15px;
+  transition: background-color 0.5s, color 0.5s, border 0.5s;
+}
+
+.continue-button:hover {
+  background-color: lightgray;
+  color: #800040;
+  border: 2px solid #800040;
+}
