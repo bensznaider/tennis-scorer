@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      style={{ height:"100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent:"center"}}
     >
       <div className="app-window">
         <TitleBar />
