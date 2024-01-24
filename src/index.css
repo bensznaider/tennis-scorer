@@ -17,7 +17,7 @@ body {
 .app-window {
   background-color: white;
   max-width: 400px;
-  height: 100dvh;
+  height: 100vh;
   max-height: 800px;
   display: flex;
   flex-direction: column;
@@ -58,4 +58,11 @@ body {
   background-color: lightgray;
   color: #800040;
   border: 2px solid #800040;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

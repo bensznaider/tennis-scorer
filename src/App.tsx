@@ -1,11 +1,10 @@
 import { useState } from "react";
 import TitleBar from "./components/TitleBar";
 import WelcomeMessage from "./components/WelcomeMessage";
-import SpinningBall from "./commons/SpinningBall";
+import ScoringFlow from "./components/ScoringFlow";
 
 function App() {
   const [welcome, setWelcome] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(false);
 
   return (
     <div
@@ -13,8 +12,8 @@ function App() {
     >
       <div className="app-window">
         <TitleBar />
-        {loading && <SpinningBall />}
-        {welcome && <WelcomeMessage setWelcome={setWelcome} setLoading={setLoading}/>}
+        {welcome && <WelcomeMessage setWelcome={setWelcome} />}
+        {!welcome && <ScoringFlow />}
       </div>
     </div>
   );

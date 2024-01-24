@@ -1,14 +1,9 @@
 interface WelcomeMessageProps {
   setWelcome: (value: boolean) => void;
-  setLoading: (value: boolean) => void;
 }
-const WelcomeMessage: React.FC<WelcomeMessageProps> = ({setWelcome, setLoading}) => {
+const WelcomeMessage: React.FC<WelcomeMessageProps> = ({setWelcome}) => {
   const handleWelcomeMessage = () => {
     setWelcome(false);
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
   };
 
   return (
