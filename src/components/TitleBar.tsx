@@ -1,9 +1,18 @@
-const TitleBar: React.FC<any> = () => {
+interface TitleBarProps {
+  refreshQuestion: boolean;
+  setRefreshQuestion: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const TitleBar: React.FC<TitleBarProps> = ({refreshQuestion, setRefreshQuestion}) => {
+const handleTitleClick = () => {
+  setRefreshQuestion(true)
+}
+
   return (
-    <h1 className="title-bar">
+    <h1 className="title-bar" style={{cursor:"pointer"}} onClick={handleTitleClick}>
       TENNIS SC
       <img
-        src="assets/tennis-ball-svgrepo-com.svg"
+        src={`${refreshQuestion ? "assets/tennis-ball-grey.svg" : "assets/tennis-ball-svgrepo-com.svg"}`}
         alt="Tennis ball picture"
         style={{ width: "6%", marginLeft: "1.5%" }}
       />
