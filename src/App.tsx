@@ -19,7 +19,7 @@ function App() {
       }}
     >
       {refreshQuestion && <RestartAlert setRefreshQuestion={setRefreshQuestion}/>}
-      <div className={`app-window ${refreshQuestion && "grey-background"}`}>
+      <div className={`app-window ${refreshQuestion && "restart-question-background"}`}>
         <TitleBar refreshQuestion={refreshQuestion} setRefreshQuestion={setRefreshQuestion} />
         {welcome && <WelcomeMessage setWelcome={setWelcome} />}
         {!welcome && <ScoringFlow />}

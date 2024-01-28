@@ -24,8 +24,9 @@ body {
   align-items: center;
 }
 
-.grey-background {
+.restart-question-background {
   background-color: grey;
+  pointer-events: none;
 }
 
 .title-bar {
@@ -59,6 +60,13 @@ body {
   cursor: pointer;
 }
 
+
+.continue-button:hover {
+  background-color: lightgray;
+  color: #800040;
+  border: 2px solid #800040;
+}
+
 .not-selected-option {
   background-color: white;
   color: #800040;
@@ -68,10 +76,13 @@ body {
   cursor: pointer;
 }
 
-.continue-button:hover {
-  background-color: lightgray;
-  color: #800040;
-  border: 2px solid #800040;
+.selected-option {
+  background-color: grey;
+  color: white;
+  padding: 1rem;
+  border: 2px solid black;
+  border-radius: 15px;
+  cursor: pointer;
 }
 
 .flex-column {

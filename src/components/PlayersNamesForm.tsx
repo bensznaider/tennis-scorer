@@ -5,9 +5,11 @@ interface PlayersNamesProps {
   player2: string;
   setPlayer1: React.Dispatch<React.SetStateAction<string>>;
   setPlayer2: React.Dispatch<React.SetStateAction<string>>;
+  setFlowStep: React.Dispatch<React.SetStateAction<number>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const PlayersNamesForm: React.FC<PlayersNamesProps> = ({player1, player2, setPlayer1, setPlayer2}) => {
+const PlayersNamesForm: React.FC<PlayersNamesProps> = ({player1, player2, setPlayer1, setPlayer2, setFlowStep, setLoading}) => {
 
   const handleOnChangePlayer1 = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -19,10 +21,19 @@ const PlayersNamesForm: React.FC<PlayersNamesProps> = ({player1, player2, setPla
     setPlayer2(event.target.value);
   };
 
+  const handleSubmitPlayersNames = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setFlowStep(1);
+    }, 1000);
+  }
+
   return (
     <div>
-      <h2>Enter players names.</h2>
-      <form className="flex-column" style={{marginTop:"0.5rem", marginBottom:"0.5rem"}}>
+      <h1>Enter players names.</h1>
+      <form className="flex-column" style={{marginTop:"0.5rem", marginBottom:"0.5rem"}} onSubmit={handleSubmitPlayersNames}>
         Player 1
         <input
         style={{marginBottom:"0.5rem", marginTop:"0.5rem"}}
