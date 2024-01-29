@@ -3,26 +3,37 @@ import ContinueButton from "../commons/ContinueButton";
 
 interface NumberOfSetsProps {
   setFlowStep: React.Dispatch<React.SetStateAction<number>>;
+  setNumberOfSets: React.Dispatch<React.SetStateAction<number>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const NumberOfSets: React.FC<NumberOfSetsProps> = ({setFlowStep}) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+const NumberOfSets: React.FC<NumberOfSetsProps> = ({setFlowStep, setNumberOfSets, setLoading}) => {
+  const [selectedOption, setSelectedOption] = useState<number>(0);
 
-  const handleOptionSelected = (option: string) => {
-    setSelectedOption(option);
+  const handleSetsSelector = (option: number) => {
+    setSelectedOption(option)
   };
 
- // const handleContinue = () => {
-   // setFlowStep(2)
-  //}
-
+ const handleContinue = () => {
+   setNumberOfSets(selectedOption);
+   setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setFlowStep(2);
+    }, 1000);
+  }
+  
   return (
     <div >
-      <h1 style={{}}>Select number of sets.</h1>
-      <button className={selectedOption === "1 set" ? "selected-option" : "not-selected-option"} style={{margin:"0.5rem", width:"7rem"}} onClick={() => handleOptionSelected("1 set")}>1 set <span style={{position:"absolute", marginLeft:"0.3rem", color:"lightgreen"}}>{selectedOption === "1 set" ? '✔' : null}</span></button>
-      <button className={selectedOption === "3 sets" ? "selected-option" : "not-selected-option"} style={{margin:"0.5rem", width:"7rem"}} onClick={() => handleOptionSelected("3 sets")}>3 sets <span style={{position:"absolute", marginLeft:"0.3rem", color:"lightgreen"}}>{selectedOption === "3 sets" ? '✔' : null}</span></button>
-      <button className={selectedOption === "5 sets" ? "selected-option" : "not-selected-option"} style={{margin:"0.5rem", width:"7rem"}} onClick={() => handleOptionSelected("5 sets")}>5 sets <span style={{position:"absolute", marginLeft:"0.3rem", color:"lightgreen"}}>{selectedOption === "5 sets" ? '✔' : null}</span></button>
-      <ContinueButton  />
+      <form onSubmit={handleContinue}>
+        <h1>Select number of sets.</h1>
+        <div style={{display:"flex"}}>
+          <div className={selectedOption === 1 ? "selected-option" : "not-selected-option"} style={{margin:"0.5rem", width:"4rem"}} onClick={() => handleSetsSelector(1)}>1 set <span style={{position:"absolute", marginLeft:"0.3rem", color:"lightgreen"}}>{selectedOption === 1 ? '✔' : null}</span></div>
+          <div className={selectedOption === 3 ? "selected-option" : "not-selected-option"} style={{margin:"0.5rem", width:"4rem"}} onClick={() => handleSetsSelector(3)}>3 sets <span style={{position:"absolute", marginLeft:"0.3rem", color:"lightgreen"}}>{selectedOption === 3 ? '✔' : null}</span></div>
+          <div className={selectedOption === 5 ? "selected-option" : "not-selected-option"} style={{margin:"0.5rem", width:"4rem"}} onClick={() => handleSetsSelector(5)}>5 sets <span style={{position:"absolute", marginLeft:"0.3rem", color:"lightgreen"}}>{selectedOption === 5 ? '✔' : null}</span></div>
+        </div>
+        <ContinueButton />
+      </form>
     </div>
   );
 };

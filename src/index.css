@@ -9,7 +9,7 @@
 
 body {
   font-family: 'DM Sans', sans-serif;
-  background-image: url("assets/tennis-court-background.jpg");
+  background-image: url("../assets/tennis-court-background.jpg");
   background-position: center;
   background-size: cover;
 }
@@ -59,7 +59,6 @@ body {
   transition: background-color 0.5s, color 0.5s, border 0.5s;
   cursor: pointer;
 }
-
 
 .continue-button:hover {
   background-color: lightgray;
