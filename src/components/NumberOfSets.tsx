@@ -5,7 +5,7 @@ interface NumberOfSetsProps {
   setFlowStep: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const NumberOfSets: React.FC<NumberOfSetsProps> = ({setFlowStep}) => {
+const NumberOfSets: React.FC<NumberOfSetsProps> = ({}) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   const handleOptionSelected = (option: string) => {
