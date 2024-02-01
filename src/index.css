@@ -16,8 +16,9 @@ body {
 
 .app-window {
   background-color: white;
-  max-width: 400px;
+  max-width: 440px;
   height: 100vh;
+  min-height: 400px;
   max-height: 800px;
   display: flex;
   flex-direction: column;
@@ -105,6 +106,14 @@ body {
   padding: 1.5rem 0;
   top: 38%;
   width: 100vw;
-  max-width: 400px;
+  max-width: 440px;
   background-color: white;
+}
+
+.player-score {
+  width:10rem;
+  margin:1.5rem;
+  padding:0.2rem;
+  box-shadow: 0 2px 4px black;
+  border-radius: 15px;
 }

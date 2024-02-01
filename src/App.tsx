@@ -12,6 +12,7 @@ function App() {
     <div
       style={{
         height: "100vh",
+        minHeight: "400px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

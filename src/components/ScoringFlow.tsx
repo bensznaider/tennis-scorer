@@ -3,6 +3,7 @@ import SpinningBall from "../commons/SpinningBall";
 import PlayersNamesForm from "./PlayersNamesForm";
 import NumberOfSets from "./NumberOfSets";
 import WhoServesFirst from "./WhoServesFirst";
+import Score from "./Score";
 
 const ScoringFlow: React.FC<any> = () => {
   const [flowStep, setFlowStep] = useState<number>(0);
@@ -26,6 +27,7 @@ const ScoringFlow: React.FC<any> = () => {
       {!loading && flowStep === 0 && <PlayersNamesForm player1={player1} player2={player2} setPlayer1={setPlayer1} setPlayer2={setPlayer2} setFlowStep={setFlowStep} setLoading={setLoading}/>}
       {!loading && flowStep === 1 && <NumberOfSets setFlowStep={setFlowStep} setNumberOfSets={setNumberOfSets} setLoading={setLoading}/>}
       {!loading && flowStep === 2 && <WhoServesFirst player1={player1} player2={player2} setServer={setServer} setFlowStep={setFlowStep} setLoading={setLoading}/>}
+      {!loading && flowStep === 3 && <Score player1={player1} player2={player2} server={server} numberOfSets={numberOfSets} setLoading={setLoading}/>}
     </div>
   );
 };

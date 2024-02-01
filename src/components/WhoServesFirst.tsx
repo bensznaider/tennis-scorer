@@ -11,9 +11,25 @@ interface WhoServesFirstProps {
 
 const WhoServesFirst: React.FC<WhoServesFirstProps> = ({player1, player2, setServer, setFlowStep, setLoading}) => {
   const [selectedOption, setSelectedOption] = useState<string>("");
+  const [randomButtonContent, setRandomButtonContent] = useState<React.ReactNode>("Random");
 
   const handleSetsSelector = (option: string) => {
     setSelectedOption(option)
+  };
+
+  const handleRandomChoice = () => {
+    const randomNumber = Math.random()
+    setRandomButtonContent(<img
+      src="assets/tennis-ball-svgrepo-com.svg"
+      alt="Tennis ball picture"
+      id="spinning-ball"
+      style={{height:"20px",marginTop:"2px"}}
+    />);
+    setTimeout(() => {
+      setRandomButtonContent("Random");
+      randomNumber < 0.5 ? setSelectedOption("player1") : setSelectedOption("player2")
+    }, 1000);
+
   };
 
  const handleContinue = () => {
@@ -33,7 +49,7 @@ const WhoServesFirst: React.FC<WhoServesFirstProps> = ({player1, player2, setSer
         <div className={selectedOption === "player1" ? "selected-option" : "not-selected-option"} style={{margin:"0.5rem", width:"7rem"}} onClick={() => handleSetsSelector("player1")}>{player1} <span style={{position:"absolute", marginLeft:"0.3rem", color:"lightgreen"}}>{selectedOption === "player1" ? '✔' : null}</span></div>
         <div className={selectedOption === "player2" ? "selected-option" : "not-selected-option"} style={{margin:"0.5rem", width:"7rem"}} onClick={() => handleSetsSelector("player2")}>{player2} <span style={{position:"absolute", marginLeft:"0.3rem", color:"lightgreen"}}>{selectedOption === "player2" ? '✔' : null}</span></div>
         </div>
-        <div className="continue-button" style={{marginLeft:"auto", marginRight:"auto",marginBottom:"1rem", width:"5rem", backgroundColor:"black"}}>Random</div>
+        <div className="continue-button" style={{textAlign:"center",marginLeft:"auto", marginRight:"auto",marginBottom:"1rem", height:"1.5rem", width:"5rem", backgroundColor:"black"}} onClick={handleRandomChoice}>{randomButtonContent}</div>
         <ContinueButton />
       </form>
     </div>
