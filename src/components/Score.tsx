@@ -4,7 +4,13 @@ interface ScoreProps {
   player1: string;
   player2: string;
   server: string;
-  numberOfSets: number;
+  sets: {
+    set1: number[];
+    set2: number[] | null;
+    set3: number[] | null;
+    set4: number[] | null;
+    set5: number[] | null;
+  };
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -12,15 +18,39 @@ const Score: React.FC<ScoreProps> = ({
   player1,
   player2,
   server,
-  numberOfSets,
+  sets,
   setLoading,
 }) => {
-  console.log(server, numberOfSets, setLoading);
+  console.log(server, setLoading);
 
   return (
-    <div style={{ display: "flex" }}>
-      <div style={{ paddingTop:"1rem" }}>
-        <p className="player-score">
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "95vw",
+        maxWidth: "420px",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          marginBottom: "0.5rem",
+        }}
+      >
+        <p style={{ width: "53%" }}></p>
+        <p style={{ width: "13%" }}>Points</p>
+        <p style={{ width: "7%" }}>S1</p>
+        <p style={{ width: "7%" }}>S2</p>
+        <p style={{ width: "7%" }}>S3</p>
+        <p style={{ width: "7%" }}>S4</p>
+        <p style={{ width: "7%" }}>S5</p>
+      </div>
+      <div
+        style={{ display: "flex", flexDirection: "row", marginBottom: "1rem" }}
+      >
+        <p className="player-score" style={{ width: "52%" }}>
           {player1}
           {server === "player1" ? (
             <img
@@ -30,7 +60,15 @@ const Score: React.FC<ScoreProps> = ({
             />
           ) : null}
         </p>
-        <p className="player-score">
+        <p style={{ width: "13%" }}>0</p>
+        <p style={{ width: "7%" }}>{sets["set1"][0]}</p>
+        <p style={{ width: "7%" }}>{sets["set2"] ? sets["set2"][0] : "-"}</p>
+        <p style={{ width: "7%" }}>{sets["set3"] ? sets["set3"][0] : "-"}</p>
+        <p style={{ width: "7%" }}>{sets["set4"] ? sets["set4"][0] : "-"}</p>
+        <p style={{ width: "7%" }}>{sets["set5"] ? sets["set5"][0] : "-"}</p>
+      </div>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <p className="player-score" style={{ width: "52%" }}>
           {player2}{" "}
           {server === "player2" ? (
             <img
@@ -40,59 +78,12 @@ const Score: React.FC<ScoreProps> = ({
             />
           ) : null}
         </p>
-      </div>
-      <div style={{ display: "flex", fontSize: "small" }}>
-        <div style={{ display: "flex",flexDirection:"column", alignItems:"center"}}>
-          Game points
-          <div
-            style={{
-              boxShadow: "0 2px 4px black",
-              borderRadius: "15px",
-              height: "5.6rem",
-              width: "2rem",
-            }}
-          ></div>
-        </div>
-        <div>Set 1<div
-            style={{
-              boxShadow: "0 2px 4px black",
-              borderRadius: "15px",
-              height: "5.6rem",
-              width: "2rem",
-            }}
-          ></div></div>
-        <div>Set 2<div
-            style={{
-              boxShadow: "0 2px 4px black",
-              borderRadius: "15px",
-              height: "5.6rem",
-              width: "2rem",
-            }}
-          ></div></div>
-        <div>Set 3<div
-            style={{
-              boxShadow: "0 2px 4px black",
-              borderRadius: "15px",
-              height: "5.6rem",
-              width: "2rem",
-            }}
-          ></div></div>
-        <div>Set 4<div
-            style={{
-              boxShadow: "0 2px 4px black",
-              borderRadius: "15px",
-              height: "5.6rem",
-              width: "2rem",
-            }}
-          ></div></div>
-        <div>Set 5<div
-            style={{
-              boxShadow: "0 2px 4px black",
-              borderRadius: "15px",
-              height: "5.6rem",
-              width: "2rem",
-            }}
-          ></div></div>
+        <p style={{ width: "13%" }}>0</p>
+        <p style={{ width: "7%" }}>{sets["set1"][1]}</p>
+        <p style={{ width: "7%" }}>{sets["set2"] ? sets["set2"][1] : "-"}</p>
+        <p style={{ width: "7%" }}>{sets["set3"] ? sets["set3"][1] : "-"}</p>
+        <p style={{ width: "7%" }}>{sets["set4"] ? sets["set4"][1] : "-"}</p>
+        <p style={{ width: "7%" }}>{sets["set5"] ? sets["set5"][1] : "-"}</p>
       </div>
     </div>
   );
