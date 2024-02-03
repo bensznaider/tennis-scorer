@@ -1,5 +1,3 @@
-//import { useState } from "react";
-
 interface ScoreProps {
   player1: string;
   player2: string;
@@ -26,8 +24,8 @@ const Score: React.FC<ScoreProps> = ({
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
+        position: "relative",
+        bottom: "8.5rem",
         width: "95vw",
         maxWidth: "420px",
       }}

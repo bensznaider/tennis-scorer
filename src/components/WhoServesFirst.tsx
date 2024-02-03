@@ -1,5 +1,4 @@
 import { useState } from "react";
-import ContinueButton from "../commons/ContinueButton";
 
 interface WhoServesFirstProps {
   player1: string;
@@ -121,7 +120,7 @@ const WhoServesFirst: React.FC<WhoServesFirstProps> = ({
         >
           {randomButtonContent}
         </div>
-        <ContinueButton />
+        <button className="continue-button">Start match</button>
         {alertMessage && (
           <p
             style={{

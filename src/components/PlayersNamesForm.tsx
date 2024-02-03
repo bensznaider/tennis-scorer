@@ -1,5 +1,3 @@
-import ContinueButton from "../commons/ContinueButton";
-
 interface PlayersNamesProps {
   player1: string;
   player2: string;
@@ -54,7 +52,7 @@ const PlayersNamesForm: React.FC<PlayersNamesProps> = ({player1, player2, setPla
           required={true}
           placeholder={"Player 2 full name."}
         />
-        <ContinueButton />
+        <button className="continue-button">Continue</button>
       </form>
     </div>
   );

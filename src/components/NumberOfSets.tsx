@@ -1,5 +1,4 @@
 import { useState } from "react";
-import ContinueButton from "../commons/ContinueButton";
 
 interface NumberOfSetsProps {
   setFlowStep: React.Dispatch<React.SetStateAction<number>>;
@@ -125,7 +124,7 @@ const NumberOfSets: React.FC<NumberOfSetsProps> = ({
             </span>
           </div>
         </div>
-        <ContinueButton />
+        <button className="continue-button">Continue</button>
         {alertMessage && (
           <p
             style={{
