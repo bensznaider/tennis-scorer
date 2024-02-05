@@ -91,6 +91,7 @@ const ScoringFlow: React.FC<any> = () => {
             <PointsMenu
               player1={player1}
               player2={player2}
+              server={server}
               setServer={setServer}
               setFlowStep={setFlowStep}
               setLoading={setLoading}
