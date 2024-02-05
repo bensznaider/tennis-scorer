@@ -8,7 +8,7 @@
 }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: "DM Sans", sans-serif;
   background-image: url("../assets/tennis-court-background.jpg");
   background-position: center;
   background-size: cover;
@@ -16,8 +16,9 @@ body {
 
 .app-window {
   background-color: white;
-  max-width: 400px;
+  max-width: 440px;
   height: 100vh;
+  min-height: 400px;
   max-height: 800px;
   display: flex;
   flex-direction: column;
@@ -38,8 +39,12 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 #spinning-ball {
@@ -59,7 +64,6 @@ body {
   transition: background-color 0.5s, color 0.5s, border 0.5s;
   cursor: pointer;
 }
-
 
 .continue-button:hover {
   background-color: lightgray;
@@ -100,12 +104,18 @@ body {
 }
 
 .restart-alert-message {
-  position:absolute;
+  position: absolute;
   font-size: x-large;
   text-align: center;
   padding: 1.5rem 0;
   top: 38%;
   width: 100vw;
-  max-width: 400px;
+  max-width: 440px;
   background-color: white;
+}
+
+.player-score {
+  padding: 0.2rem;
+  box-shadow: 0 2px 4px grey;
+  border-radius: 15px;
 }
