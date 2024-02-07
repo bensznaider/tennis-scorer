@@ -9,7 +9,10 @@ interface ScoreProps {
     set4: number[] | null;
     set5: number[] | null;
   };
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  gamePoints: {
+    player1: number;
+    player2: number;
+  }
 }
 
 const Score: React.FC<ScoreProps> = ({
@@ -17,15 +20,12 @@ const Score: React.FC<ScoreProps> = ({
   player2,
   server,
   sets,
-  setLoading,
+  gamePoints,
 }) => {
-  console.log(server, setLoading);
 
   return (
     <div
       style={{
-        position: "relative",
-        bottom: "8.5rem",
         width: "95vw",
         maxWidth: "420px",
       }}
@@ -58,7 +58,7 @@ const Score: React.FC<ScoreProps> = ({
             />
           ) : null}
         </p>
-        <p style={{ width: "13%" }}>0</p>
+        <p style={{ width: "13%" }}>{gamePoints.player1}</p>
         <p style={{ width: "7%" }}>{sets["set1"][0]}</p>
         <p style={{ width: "7%" }}>{sets["set2"] ? sets["set2"][0] : "-"}</p>
         <p style={{ width: "7%" }}>{sets["set3"] ? sets["set3"][0] : "-"}</p>
@@ -76,7 +76,7 @@ const Score: React.FC<ScoreProps> = ({
             />
           ) : null}
         </p>
-        <p style={{ width: "13%" }}>0</p>
+        <p style={{ width: "13%" }}>{gamePoints.player2}</p>
         <p style={{ width: "7%" }}>{sets["set1"][1]}</p>
         <p style={{ width: "7%" }}>{sets["set2"] ? sets["set2"][1] : "-"}</p>
         <p style={{ width: "7%" }}>{sets["set3"] ? sets["set3"][1] : "-"}</p>

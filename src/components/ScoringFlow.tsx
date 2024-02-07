@@ -34,8 +34,6 @@ const ScoringFlow: React.FC<any> = () => {
   });
 
   useEffect(() => {
-    //CONSOLE LOG INCLUDED TEMPORARILY TO AVOID ERROR MESSAGE ABOUT THIS STATES NOT BEING USED
-    console.log(gamePoints, setGamePoints);
     setTimeout(() => {
       setLoading(false);
     }, 1000);
@@ -86,15 +84,17 @@ const ScoringFlow: React.FC<any> = () => {
               player2={player2}
               server={server}
               sets={sets}
-              setLoading={setLoading}
+              gamePoints={gamePoints}
+             
             />
             <PointsMenu
               player1={player1}
               player2={player2}
               server={server}
               setServer={setServer}
+              setGamePoints={setGamePoints}
               setFlowStep={setFlowStep}
-              setLoading={setLoading}
+            
             />
           </div>
         )}

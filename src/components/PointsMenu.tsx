@@ -5,8 +5,10 @@ interface PointsMenuProps {
   player2: string;
   server: string;
   setServer: React.Dispatch<React.SetStateAction<string>>;
+  setGamePoints: React.Dispatch<
+    React.SetStateAction<{ player1: number; player2: number }>
+  >;
   setFlowStep: React.Dispatch<React.SetStateAction<number>>;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PointsMenu: React.FC<PointsMenuProps> = ({
@@ -14,17 +16,19 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
   player2,
   server,
   setServer,
+  setGamePoints,
   setFlowStep,
-  setLoading,
 }) => {
   const [pointWinner, setPointWinner] = useState<string>("");
   const [serveData, setServeData] = useState<string | null>("");
   const [winnerData, setWinnerData] = useState<string | null>("");
   const [unforcedErrorData, setUnforcedErrorData] = useState<string | null>("");
+  const [forcedError, setForcedError] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<boolean>(false);
+  const [selectServeMessage, setSelectServeMessage] = useState<boolean>(false);
   const [pointFlowStep, setPointFlowStep] = useState<number>(0);
   //CONSOLE LOG TO TEMPORARILY AVOID ERROR MESSAGE
-  console.log(setServer, setFlowStep, setLoading);
+  console.log(setServer, setFlowStep);
 
   const handlePointWinner = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -48,12 +52,56 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
   const handleWinnerData = (option: string) => {
     setWinnerData(option);
     setUnforcedErrorData(null);
+    setForcedError(false);
   };
 
   const handleUnforcedErrorData = (option: string) => {
     setWinnerData(null);
-    setServeData(null);
+    setForcedError(false);
+    if (option === "double fault") {
+      setServeData(null);
+    }
     setUnforcedErrorData(option);
+  };
+
+  const handleForcedError = () => {
+    setWinnerData(null);
+    setUnforcedErrorData(null);
+    setForcedError(true);
+  };
+
+  const handleStatsContinue = () => {
+    if (!winnerData && !unforcedErrorData && !forcedError) {
+      setAlertMessage(true);
+      setTimeout(() => {
+        setAlertMessage(false);
+      }, 1500);
+      return;
+    }
+    if (!serveData && unforcedErrorData !== "double fault") {
+      setSelectServeMessage(true);
+      setTimeout(() => {
+        setSelectServeMessage(false);
+      }, 1500);
+      return;
+    }
+    if (pointWinner === "player1") {
+      setGamePoints((prevPoints) => ({
+        ...prevPoints,
+        player1: prevPoints.player1 + 1,
+      }));
+    } else if (pointWinner === "player2") {
+      setGamePoints((prevPoints) => ({
+        ...prevPoints,
+        player2: prevPoints.player2 + 1,
+      }));
+    }
+    setPointWinner("");
+    setUnforcedErrorData(null);
+    setWinnerData(null);
+    setServeData(null);
+    setForcedError(false);
+    setPointFlowStep(0);
   };
 
   return (
@@ -131,8 +179,15 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
         </form>
       )}
       {pointFlowStep === 1 && (
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
           <div className="stats-submenu">
+            Serve
             <div
               className={`stats-options ${
                 serveData === "first serve"
@@ -224,39 +279,157 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
           </div>
           <div className="stats-submenu">
             Winner
-            <div>
-              <div
-                className={`stats-options ${
-                 winnerData === "forehand"
-                    ? "selected-option"
-                    : "not-selected-option"
-                }
+            <div
+              className={`stats-options ${
+                winnerData === "forehand"
+                  ? "selected-option"
+                  : "not-selected-option"
+              }
               `}
-                style={{ margin: "0.5rem", width: "7rem" }}
-                onClick={() => handleWinnerData("forehand")}
+              style={{ margin: "0.5rem", width: "7rem" }}
+              onClick={() => handleWinnerData("forehand")}
+            >
+              Forehand
+              <span
+                style={{
+                  position: "absolute",
+                  marginLeft: "0.3rem",
+                  color: "lightgreen",
+                }}
               >
-                Forehand
-                <span
-                  style={{
-                    position: "absolute",
-                    marginLeft: "0.3rem",
-                    color: "lightgreen",
-                  }}
-                >
-                  {winnerData === "forehand" ? "✔" : null}
-                </span>
-              </div>
+                {winnerData === "forehand" ? "✔" : null}
+              </span>
+            </div>
+            <div
+              className={`stats-options ${
+                winnerData === "backhand"
+                  ? "selected-option"
+                  : "not-selected-option"
+              }
+            `}
+              style={{ margin: "0.5rem", width: "7rem" }}
+              onClick={() => handleWinnerData("backhand")}
+            >
+              Backhand
+              <span
+                style={{
+                  position: "absolute",
+                  marginLeft: "0.3rem",
+                  color: "lightgreen",
+                }}
+              >
+                {winnerData === "backhand" ? "✔" : null}
+              </span>
+            </div>
+            <div
+              className={`stats-options ${
+                winnerData === "volley"
+                  ? "selected-option"
+                  : "not-selected-option"
+              }
+               `}
+              style={{ margin: "0.5rem", width: "7rem" }}
+              onClick={() => handleWinnerData("volley")}
+            >
+              Volley
+              <span
+                style={{
+                  position: "absolute",
+                  marginLeft: "0.3rem",
+                  color: "lightgreen",
+                }}
+              >
+                {winnerData === "volley" ? "✔" : null}
+              </span>
+            </div>
+          </div>
+          <div className="stats-submenu">
+            Rival Unforced Error
+            <div
+              className={`stats-options ${
+                unforcedErrorData === "forehand"
+                  ? "selected-option"
+                  : "not-selected-option"
+              }
+                 `}
+              style={{ margin: "0.5rem", width: "7rem" }}
+              onClick={() => handleUnforcedErrorData("forehand")}
+            >
+              Forehand
+              <span
+                style={{
+                  position: "absolute",
+                  marginLeft: "0.3rem",
+                  color: "lightgreen",
+                }}
+              >
+                {unforcedErrorData === "forehand" ? "✔" : null}
+              </span>
+            </div>
+            <div
+              className={`stats-options ${
+                unforcedErrorData === "backhand"
+                  ? "selected-option"
+                  : "not-selected-option"
+              }
+                 `}
+              style={{ margin: "0.5rem", width: "7rem" }}
+              onClick={() => handleUnforcedErrorData("backhand")}
+            >
+              Backhand
+              <span
+                style={{
+                  position: "absolute",
+                  marginLeft: "0.3rem",
+                  color: "lightgreen",
+                }}
+              >
+                {unforcedErrorData === "backhand" ? "✔" : null}
+              </span>
+            </div>
+            <div
+              className={`stats-options ${
+                unforcedErrorData === "volley"
+                  ? "selected-option"
+                  : "not-selected-option"
+              }
+                 `}
+              style={{ margin: "0.5rem", width: "7rem" }}
+              onClick={() => handleUnforcedErrorData("volley")}
+            >
+              Volley
+              <span
+                style={{
+                  position: "absolute",
+                  marginLeft: "0.3rem",
+                  color: "lightgreen",
+                }}
+              >
+                {unforcedErrorData === "volley" ? "✔" : null}
+              </span>
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-around",
+              alignItems: "center",
+              marginBottom: "1rem",
+            }}
+          >
+            <div className="stats-submenu">
               <div
                 className={`stats-options ${
-                  winnerData === "backhand"
+                  forcedError === true
                     ? "selected-option"
                     : "not-selected-option"
                 }
-            `}
+                 `}
                 style={{ margin: "0.5rem", width: "7rem" }}
-                onClick={() => handleWinnerData("backhand")}
+                onClick={handleForcedError}
               >
-                Backhand
+                Rival Forced Error
                 <span
                   style={{
                     position: "absolute",
@@ -264,40 +437,34 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
                     color: "lightgreen",
                   }}
                 >
-                  {winnerData === "backhand" ? "✔" : null}
-                </span>
-              </div>
-              <div
-                className={`stats-options ${
-                  winnerData === "volley"
-                    ? "selected-option"
-                    : "not-selected-option"
-                }
-            `}
-                style={{ margin: "0.5rem", width: "7rem" }}
-                onClick={() => handleWinnerData("volley")}
-              >
-                Volley
-                <span
-                  style={{
-                    position: "absolute",
-                    marginLeft: "0.3rem",
-                    color: "lightgreen",
-                  }}
-                >
-                  {winnerData === "volley" ? "✔" : null}
+                  {forcedError === true ? "✔" : null}
                 </span>
               </div>
             </div>
+            <button
+              className="continue-button"
+              style={{ width: "fit-content" }}
+              onClick={handleStatsContinue}
+            >
+              Continue
+            </button>
             {alertMessage && (
               <p
                 style={{
-                  position: "absolute",
-                  marginTop: "0.6rem",
-                  marginLeft: "2rem",
+                  fontSize: "small",
                 }}
               >
-                Please select an option to continue.
+                Please choose how {pointWinner === player1 ? player1 : player2}{" "}
+                won the point.
+              </p>
+            )}
+            {selectServeMessage && (
+              <p
+                style={{
+                  fontSize: "small",
+                }}
+              >
+                Please choose between first or second serve.
               </p>
             )}
           </div>
