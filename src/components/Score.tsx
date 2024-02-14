@@ -12,7 +12,7 @@ interface ScoreProps {
   gamePoints: {
     player1: number;
     player2: number;
-  }
+  };
 }
 
 const Score: React.FC<ScoreProps> = ({
@@ -22,7 +22,6 @@ const Score: React.FC<ScoreProps> = ({
   sets,
   gamePoints,
 }) => {
-
   return (
     <div
       style={{
@@ -58,7 +57,21 @@ const Score: React.FC<ScoreProps> = ({
             />
           ) : null}
         </p>
-        <p style={{ width: "13%" }}>{gamePoints.player1}</p>
+        <p style={{ width: "13%" }}>
+          {gamePoints.player1 === 0 && 0}
+          {gamePoints.player1 === 1 && 15}
+          {gamePoints.player1 === 2 && 30}
+          {gamePoints.player1 === 3 && 40}
+          {gamePoints.player1 >= 4 &&
+            gamePoints.player1 > gamePoints.player2 &&
+            "A"}
+          {gamePoints.player1 >= 4 &&
+            gamePoints.player1 < gamePoints.player2 &&
+            "-"}
+          {gamePoints.player1 >= 4 &&
+            gamePoints.player1 === gamePoints.player2 &&
+            "40"}
+        </p>
         <p style={{ width: "7%" }}>{sets["set1"][0]}</p>
         <p style={{ width: "7%" }}>{sets["set2"] ? sets["set2"][0] : "-"}</p>
         <p style={{ width: "7%" }}>{sets["set3"] ? sets["set3"][0] : "-"}</p>
@@ -76,7 +89,21 @@ const Score: React.FC<ScoreProps> = ({
             />
           ) : null}
         </p>
-        <p style={{ width: "13%" }}>{gamePoints.player2}</p>
+        <p style={{ width: "13%" }}>
+          {gamePoints.player2 === 0 && 0}
+          {gamePoints.player2 === 1 && 15}
+          {gamePoints.player2 === 2 && 30}
+          {gamePoints.player2 === 3 && 40}
+          {gamePoints.player2 >= 4 &&
+            gamePoints.player2 > gamePoints.player1 &&
+            "A"}
+          {gamePoints.player2 >= 4 &&
+            gamePoints.player2 < gamePoints.player1 &&
+            "-"}
+          {gamePoints.player2 >= 4 &&
+            gamePoints.player2 === gamePoints.player1 &&
+            "40"}
+        </p>
         <p style={{ width: "7%" }}>{sets["set1"][1]}</p>
         <p style={{ width: "7%" }}>{sets["set2"] ? sets["set2"][1] : "-"}</p>
         <p style={{ width: "7%" }}>{sets["set3"] ? sets["set3"][1] : "-"}</p>

@@ -85,16 +85,16 @@ const ScoringFlow: React.FC<any> = () => {
               server={server}
               sets={sets}
               gamePoints={gamePoints}
-             
             />
             <PointsMenu
               player1={player1}
               player2={player2}
               server={server}
               setServer={setServer}
+              gamePoints={gamePoints}
               setGamePoints={setGamePoints}
               setFlowStep={setFlowStep}
-            
+              setSets={setSets}
             />
           </div>
         )}

@@ -1,14 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface PointsMenuProps {
   player1: string;
   player2: string;
   server: string;
   setServer: React.Dispatch<React.SetStateAction<string>>;
+  gamePoints: { player1: number; player2: number };
   setGamePoints: React.Dispatch<
     React.SetStateAction<{ player1: number; player2: number }>
   >;
   setFlowStep: React.Dispatch<React.SetStateAction<number>>;
+  setSets: React.Dispatch<
+    React.SetStateAction<{
+      set1: number[];
+      set2: number[] | null;
+      set3: number[] | null;
+      set4: number[] | null;
+      set5: number[] | null;
+    }>
+  >;
 }
 
 const PointsMenu: React.FC<PointsMenuProps> = ({
@@ -16,8 +26,10 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
   player2,
   server,
   setServer,
+  gamePoints,
   setGamePoints,
   setFlowStep,
+  setSets,
 }) => {
   const [pointWinner, setPointWinner] = useState<string>("");
   const [serveData, setServeData] = useState<string | null>("");
@@ -29,6 +41,39 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
   const [pointFlowStep, setPointFlowStep] = useState<number>(0);
   //CONSOLE LOG TO TEMPORARILY AVOID ERROR MESSAGE
   console.log(setServer, setFlowStep);
+
+  useEffect(() => {
+    const updateSetsAndGamePoints = async () => {
+      if (
+        gamePoints.player1 >= 4 &&
+        gamePoints.player1 > gamePoints.player2 + 1
+      ) {
+        setSets((prevSets) => ({
+          ...prevSets,
+          set1: [prevSets.set1[0] + 1, prevSets.set1[1]],
+        }));
+        setGamePoints(() => ({
+          player1: 0,
+          player2: 0,
+        }));
+        server === "player1" ? setServer("player2") : setServer("player1");
+      } else if (
+        gamePoints.player2 >= 4 &&
+        gamePoints.player2 > gamePoints.player1 + 1
+      ) {
+        setSets((prevSets) => ({
+          ...prevSets,
+          set1: [prevSets.set1[0], prevSets.set1[1] + 1],
+        }));
+        setGamePoints(() => ({
+          player1: 0,
+          player2: 0,
+        }));
+        server === "player1" ? setServer("player2") : setServer("player1");
+      }
+    };
+    updateSetsAndGamePoints();
+  }, [gamePoints, setGamePoints, setSets]);
 
   const handlePointWinner = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -441,13 +486,15 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
                 </span>
               </div>
             </div>
-            <button
-              className="continue-button"
-              style={{ width: "fit-content" }}
-              onClick={handleStatsContinue}
-            >
-              Continue
-            </button>
+            {!alertMessage && !selectServeMessage && (
+              <button
+                className="continue-button"
+                style={{ width: "fit-content" }}
+                onClick={handleStatsContinue}
+              >
+                Continue
+              </button>
+            )}
             {alertMessage && (
               <p
                 style={{
@@ -462,6 +509,7 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
               <p
                 style={{
                   fontSize: "small",
+                  width: "100%",
                 }}
               >
                 Please choose between first or second serve.
