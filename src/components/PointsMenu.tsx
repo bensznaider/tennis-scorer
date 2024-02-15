@@ -9,7 +9,6 @@ interface PointsMenuProps {
   setGamePoints: React.Dispatch<
     React.SetStateAction<{ player1: number; player2: number }>
   >;
-  setFlowStep: React.Dispatch<React.SetStateAction<number>>;
   setSets: React.Dispatch<
     React.SetStateAction<{
       set1: number[];
@@ -28,7 +27,6 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
   setServer,
   gamePoints,
   setGamePoints,
-  setFlowStep,
   setSets,
 }) => {
   const [pointWinner, setPointWinner] = useState<string>("");
@@ -37,10 +35,9 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
   const [unforcedErrorData, setUnforcedErrorData] = useState<string | null>("");
   const [forcedError, setForcedError] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<boolean>(false);
-  const [selectServeMessage, setSelectServeMessage] = useState<boolean>(false);
+  const [selectPointType, setSelectPointType] = useState<boolean>(false);
+  const [selectServeAlert, setSelectServeAlert] = useState<boolean>(false);
   const [pointFlowStep, setPointFlowStep] = useState<number>(0);
-  //CONSOLE LOG TO TEMPORARILY AVOID ERROR MESSAGE
-  console.log(setServer, setFlowStep);
 
   useEffect(() => {
     const updateSetsAndGamePoints = async () => {
@@ -117,16 +114,22 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
 
   const handleStatsContinue = () => {
     if (!winnerData && !unforcedErrorData && !forcedError) {
-      setAlertMessage(true);
+      if (!serveData && unforcedErrorData !== "double fault") {
+        setSelectServeAlert(true);
+        setTimeout(() => {
+          setSelectServeAlert(false);
+        }, 1500);
+      }
+      setSelectPointType(true);
       setTimeout(() => {
-        setAlertMessage(false);
+        setSelectPointType(false);
       }, 1500);
       return;
     }
     if (!serveData && unforcedErrorData !== "double fault") {
-      setSelectServeMessage(true);
+      setSelectServeAlert(true);
       setTimeout(() => {
-        setSelectServeMessage(false);
+        setSelectServeAlert(false);
       }, 1500);
       return;
     }
@@ -231,7 +234,10 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
             flexWrap: "wrap",
           }}
         >
-          <div className="stats-submenu">
+          <div
+            className="stats-submenu"
+            style={{ backgroundColor: `${selectServeAlert ? "red" : ""}` }}
+          >
             Serve
             <div
               className={`stats-options ${
@@ -283,7 +289,10 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
                     : "not-selected-option"
                 }
                 `}
-                style={{ margin: "0.5rem", width: "7rem" }}
+                style={{
+                  margin: "0.5rem",
+                  width: "7rem",
+                }}
                 onClick={() => handleWinnerData("ace")}
               >
                 Ace
@@ -322,7 +331,10 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
               </div>
             )}
           </div>
-          <div className="stats-submenu">
+          <div
+            className="stats-submenu"
+            style={{ backgroundColor: `${selectPointType ? "red" : ""}` }}
+          >
             Winner
             <div
               className={`stats-options ${
@@ -388,7 +400,10 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
               </span>
             </div>
           </div>
-          <div className="stats-submenu">
+          <div
+            className="stats-submenu"
+            style={{ backgroundColor: `${selectPointType ? "red" : ""}` }}
+          >
             Rival Unforced Error
             <div
               className={`stats-options ${
@@ -463,7 +478,10 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
               marginBottom: "1rem",
             }}
           >
-            <div className="stats-submenu">
+            <div
+              className="stats-submenu"
+              style={{ backgroundColor: `${selectPointType ? "red" : ""}` }}
+            >
               <div
                 className={`stats-options ${
                   forcedError === true
@@ -471,7 +489,10 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
                     : "not-selected-option"
                 }
                  `}
-                style={{ margin: "0.5rem", width: "7rem" }}
+                style={{
+                  margin: "0.5rem",
+                  width: "7rem",
+                }}
                 onClick={handleForcedError}
               >
                 Rival Forced Error
@@ -486,35 +507,13 @@ const PointsMenu: React.FC<PointsMenuProps> = ({
                 </span>
               </div>
             </div>
-            {!alertMessage && !selectServeMessage && (
-              <button
-                className="continue-button"
-                style={{ width: "fit-content" }}
-                onClick={handleStatsContinue}
-              >
-                Continue
-              </button>
-            )}
-            {alertMessage && (
-              <p
-                style={{
-                  fontSize: "small",
-                }}
-              >
-                Please choose how {pointWinner === player1 ? player1 : player2}{" "}
-                won the point.
-              </p>
-            )}
-            {selectServeMessage && (
-              <p
-                style={{
-                  fontSize: "small",
-                  width: "100%",
-                }}
-              >
-                Please choose between first or second serve.
-              </p>
-            )}
+            <button
+              className="continue-button"
+              style={{ width: "fit-content" }}
+              onClick={handleStatsContinue}
+            >
+              Continue
+            </button>
           </div>
         </div>
       )}

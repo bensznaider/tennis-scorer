@@ -7,34 +7,50 @@ interface PlayersNamesProps {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const PlayersNamesForm: React.FC<PlayersNamesProps> = ({player1, player2, setPlayer1, setPlayer2, setFlowStep, setLoading}) => {
-
-  const handleOnChangePlayer1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+const PlayersNamesForm: React.FC<PlayersNamesProps> = ({
+  player1,
+  player2,
+  setPlayer1,
+  setPlayer2,
+  setFlowStep,
+  setLoading,
+}) => {
+  const handleOnChangePlayer1 = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     event.preventDefault();
     setPlayer1(event.target.value);
   };
 
-  const handleOnChangePlayer2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnChangePlayer2 = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     event.preventDefault();
     setPlayer2(event.target.value);
   };
 
-  const handleSubmitPlayersNames = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitPlayersNames = (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
       setFlowStep(1);
     }, 1000);
-  }
+  };
 
   return (
     <div>
       <h1>Enter players names.</h1>
-      <form className="flex-column" style={{marginTop:"0.5rem", marginBottom:"0.5rem"}} onSubmit={handleSubmitPlayersNames}>
+      <form
+        className="flex-column"
+        style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}
+        onSubmit={handleSubmitPlayersNames}
+      >
         Player 1
         <input
-        style={{marginBottom:"0.5rem", marginTop:"0.5rem"}}
+          style={{ marginBottom: "0.5rem", marginTop: "0.5rem" }}
           type="text"
           name="Player 1 full name"
           value={player1}
@@ -44,7 +60,7 @@ const PlayersNamesForm: React.FC<PlayersNamesProps> = ({player1, player2, setPla
         />
         Player 2
         <input
-         style={{marginTop:"0.5rem", marginBottom:"1.5rem"}}
+          style={{ marginTop: "0.5rem", marginBottom: "1.5rem" }}
           type="text"
           name="Player 2 full name"
           value={player2}
@@ -54,6 +70,12 @@ const PlayersNamesForm: React.FC<PlayersNamesProps> = ({player1, player2, setPla
         />
         <button className="continue-button">Continue</button>
       </form>
+      <button
+        className="continue-button"
+        style={{ backgroundColor: "black", marginTop: "1rem" }}
+      >
+        Resume previous match
+      </button>
     </div>
   );
 };
